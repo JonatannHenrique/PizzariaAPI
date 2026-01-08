@@ -18,8 +18,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirTudo",
-        policy => policy.AllowAnyOrigin()  
-                        .AllowAnyMethod() 
+        policy => policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
                         .AllowAnyHeader());
 });
 
@@ -28,8 +28,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 var app = builder.Build();
 app.UseCors("PermitirTudo");
-app.UseHttpsRedirection();      
-app.UseAuthorization();         
+app.UseHttpsRedirection();
+app.UseAuthorization();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-app.MapControllers();          
-app.MapGet("/", () => "API ONLINE! ✅"); 
+app.MapControllers();
+app.MapGet("/", () => "API ONLINE! ✅");
 
- app.Run();
+app.Run();

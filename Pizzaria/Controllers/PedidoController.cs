@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MySqlX.XDevAPI;
 using Pizzaria.Models;
 
@@ -20,10 +21,10 @@ namespace Pizzaria.Controllers
             return Ok(pedidos);
         }
 
-        [HttpGet("PedidoPorId")]
+        [HttpGet("Selecionar")]
         public IActionResult GetPedidosPorId(int Id)
         {
-            var pedidos = _context.Pedidos.FirstOrDefault(p => p.Id == Id);
+            var pedidos = _context.Pedido.FirstOrDefault(p => p.Id == Id);
 
 
             if (pedidos == null)
@@ -43,11 +44,12 @@ namespace Pizzaria.Controllers
             }
             pedido.ValorTotal = pizza.Preco * pedido.Quantidade;
             pedido.Data = DateTime.Now;
-            _context.Pedidos.Add(pedido);
+            _context.Pedido.Add(pedido);
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetPedidosPorId), new { Id = pedido.Id }, pedido);
         }
 
+        
 
     }
 }

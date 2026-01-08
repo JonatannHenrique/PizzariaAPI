@@ -52,15 +52,15 @@ namespace Pizzaria.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Cadastro usuario)
+        public IActionResult Create(Cadastro cadastro)
         {
-            if (_context.Clientes.Any(c => c.Email == usuario.Email))
+            if (_context.Clientes.Any(c => c.Email == cadastro.Email))
             {
                 return BadRequest("Email Já está sendo usado. ");
             }
 
 
-            _context.Clientes.Add(usuario);
+            _context.Clientes.Add(cadastro);
             _context.SaveChanges();
             return Ok(new
             {
@@ -100,7 +100,55 @@ namespace Pizzaria.Controllers
             }
             _context.Clientes.Remove(usuarios);
             _context.SaveChanges();
-            return NoContent();
+            return Ok(new { Mensagem = "Usuario deletado com sucesso!" });
+        }
+
+
+        [HttpGet("Login")]
+        public IActionResult BuscarLogin(string Email, string Senha)
+        {
+            var usuarios = _context.Clientes
+                .FirstOrDefault(u => u.Email == Email && u.Senha == Senha);
+            if (usuarios == null)
+            {
+                return BadRequest($"o Email ou a senha estão incorretas ");
+            }
+            return Ok(usuarios);
+        }
+
+        [HttpGet("BuscarPorNome")]
+        public IActionResult BuscarPorNome(string nome)
+        {
+            if (string.IsNullOrWhiteSpace(nome))
+                return BadRequest("O nome não pode estar vazio.");
+
+            var usuario = _context.Clientes
+                .FirstOrDefault(u => u.Nome.ToLower() == nome.ToLower());
+
+            if (usuario == null)
+                return NotFound($"Usuário '{nome}' não foi encontrado.");
+
+            return Ok(usuario);
+        }
+
+
+        [HttpGet("BuscarPorId")]
+        public IActionResult BuscarPorId(ulong id)
+        {
+            var busca = _context.Clientes.FirstOrDefault(b => b.Id == id);
+            if (busca == null)
+            {
+                return BadRequest($"Erro! Usuario com o Id ({id}) não foi encontrado");
+            }
+            return Ok(busca);
+        }
+
+
+        [HttpGet("ListarPizzas")]
+        public IActionResult GetTodasPizzas()
+        {
+            var pizzas = _context.Pizzas.ToList();
+            return Ok(pizzas);
         }
     }
 }
