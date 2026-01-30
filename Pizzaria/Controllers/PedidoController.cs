@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MySqlX.XDevAPI;
 using Pizzaria.Models;
 
 namespace Pizzaria.Controllers
@@ -11,45 +9,37 @@ namespace Pizzaria.Controllers
     {
         private readonly AppDbContext _context;
 
-        public PedidoController(AppDbContext context) { _context = context; }
+        public PedidoController(AppDbContext context)
+        {
+            _context = context;
+        }
 
-
-        [HttpGet("ListaDePizzas")]
+        [HttpGet]
         public IActionResult GetTodosPedidos()
         {
-            var pedidos = _context.Pizzas.ToList();
-            return Ok(pedidos);
+            return Ok(_context.Pedido.ToList());
         }
 
-        [HttpGet("Selecionar")]
-        public IActionResult GetPedidosPorId(int Id)
+        [HttpGet("{id}")]
+        public IActionResult GetPedidoPorId(int id)
         {
-            var pedidos = _context.Pedido.FirstOrDefault(p => p.Id == Id);
-
-
-            if (pedidos == null)
-            {
-                return BadRequest($"O ID ({Id}) não encontrado");
-            }
-
-            return Ok(pedidos);
+            var pedido = _context.Pedido.FirstOrDefault(p => p.Id == id);
+            if (pedido == null) return NotFound();
+            return Ok(pedido);
         }
-        [HttpPost("RotaDePedidos")]
-        public IActionResult CriarPedido(Pedido pedido)
+
+        [HttpPost]
+        public IActionResult CriarPedido([FromBody] Pedido pedido)
         {
             var pizza = _context.Pizzas.FirstOrDefault(p => p.Id == pedido.PizzaId);
-            if (pizza == null)
-            {
-                return BadRequest($"Pizza com ID {pedido.PizzaId} não encontrada.");
-            }
+            if (pizza == null) return BadRequest("Pizza não encontrada");
+
             pedido.ValorTotal = pizza.Preco * pedido.Quantidade;
             pedido.Data = DateTime.Now;
+
             _context.Pedido.Add(pedido);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(GetPedidosPorId), new { Id = pedido.Id }, pedido);
+            return Ok(pedido);
         }
-
-        
-
     }
 }
