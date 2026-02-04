@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Pizzaria.Data.AppDbContext;
+using Microsoft.AspNetCore.Mvc;
 using Pizzaria.Models;
 
 namespace Pizzaria.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api[controller]")]
     public class UsuariosController : ControllerBase
     {
         private readonly AppDbContext _context;

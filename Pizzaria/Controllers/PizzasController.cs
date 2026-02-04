@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Pizzaria.Data.AppDbContext;
+using Microsoft.AspNetCore.Mvc;
 using Pizzaria.Models;
-
 namespace Pizzaria.Controllers
 {
     [ApiController]
