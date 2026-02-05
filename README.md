@@ -40,30 +40,19 @@ O projeto utiliza o padrão **MVC** (Model-View-Controller) para organização d
 * `POST /`: Realiza o cadastro de novos clientes com validação de e-mail único.
 * `POST /Login`: Autentica o usuário comparando e-mail e senha.
 
-🗄️ Persistência de Dados e Configuração
-O ecossistema de dados da API foi construído utilizando o MySQL como motor de banco de dados, aproveitando a robustez do Entity Framework Core para o mapeamento objeto-relacional (ORM).
+## 🍇 Persistência de Dados e Configuração
 
-📂 Arquitetura da Camada de Dados
+O ecossistema de dados da API foi construído utilizando o **MySQL** como motor de banco de dados, aproveitando a robustez do **Entity Framework Core** para o mapeamento objeto-relacional (ORM).
+
+### 📂 Arquitetura da Camada de Dados
 Toda a lógica de infraestrutura está concentrada na pasta:
+**Data/**: Onde reside o `AppDbContext.cs`. Este arquivo centraliza a configuração das tabelas e as regras de negócio de persistência para as entidades Pizza, Cadastro (Clientes) e Pedido.
 
-Data/: Onde reside o AppDbContext.cs. Este arquivo centraliza a configuração das tabelas e as regras de negócio de persistência para as entidades Pizza, Cadastro (Clientes) e Pedido.
+### 🔗 Configuração da String de Conexão
+Para conectar a API ao seu servidor local, você deve editar o arquivo `appsettings.json` na raiz do projeto. O formato utilizado é:
 
-🔗 Configuração da String de Conexão
-Para conectar a API ao seu servidor local, você deve editar o arquivo appsettings.json na raiz do projeto. O formato utilizado é:
-
-JSON
-
+**JSON**
+```json
 "ConnectionStrings": {
   "DefaultConnection": "Server=localhost;Database=pizzaria_db;Uid=root;Pwd=SUA_SENHA_AQUI;"
 }
-🚀 Processo de Instalação e Inicialização
-Para configurar o banco de dados do zero, siga os procedimentos técnicos abaixo:
-
-Dependências do Sistema: O projeto utiliza o driver Pomelo.EntityFrameworkCore.MySql, que permite a comunicação fluida entre o C# e o MySQL. Garanta que as ferramentas do EF Core estejam instaladas no seu terminal.
-
-Mapeamento Automático (Migrations): Não é necessário criar as tabelas manualmente. O sistema utiliza a técnica de Code First. Execute o comando abaixo para gerar o esquema de banco de dados automaticamente:
-
-Bash
-
-dotnet ef database update
-Compatibilidade de Versão: A API está configurada com ServerVersion.AutoDetect. Isso garante que a conexão funcione perfeitamente seja no MySQL 8.0, 5.7 ou MariaDB, sem necessidade de ajustes manuais de versão no código.
