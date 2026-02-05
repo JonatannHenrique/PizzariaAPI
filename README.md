@@ -56,3 +56,8 @@ Para conectar a API ao seu servidor local, você deve editar o arquivo `appsetti
 "ConnectionStrings": {
   "DefaultConnection": "Server=localhost;Database=pizzaria_db;Uid=root;Pwd=SUA_SENHA_AQUI;"
 }
+
+Para garantir que o projeto seja testado com fidelidade, incluí o script SQL de criação e povoamento. Isso permite validar a lógica de preços e pedidos com dados reais de uma pizzaria.
+
+### 📂 Localização do Script
+O arquivo encontra-se em: `./Database/MySQlPIZZARIA.sql`
