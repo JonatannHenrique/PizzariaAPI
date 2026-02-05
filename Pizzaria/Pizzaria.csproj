@@ -10,7 +10,6 @@
     <Compile Remove="Controllers\BuscarIdController.cs" />
     <Compile Remove="Controllers\CadastroController.cs" />
     <Compile Remove="Controllers\LoginController.cs" />
-    <Compile Remove="Models\Itempedido.cs" />
   </ItemGroup>
 
   <ItemGroup>
