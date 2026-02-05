@@ -1,4 +1,4 @@
-# 🍕 Pizza - API de Gerenciamento
+# 🍕 Pizzaria - API de Gerenciamento
 
 Sistema de backend desenvolvido em **ASP.NET Core** para controle operacional de uma pizzaria, integrando gestão de usuários, cardápio e automação de pedidos.
 
